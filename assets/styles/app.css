@@ -1,0 +1,23 @@
+@import "flexbox.css";
+@import "button.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    src: url("ReadexPro-VariableFont_HEXP,wght.ttf");
+    font-family: "Readex Pro";
+}
+
+body {
+    font-family: "Readex Pro", "Noto Sans", Inter, sans-serif;
+}
+
+.input {
+    @apply w-full bg-surface-variant text-on-surface-variant rounded px-3 py-2 my-2 border border-outline;
+}
+
+a {
+    @apply text-primary hover:text-primary-dark;
+}

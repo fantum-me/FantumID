@@ -1,0 +1,11 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}New OAuthClient{% endblock %}
+
+{% block body %}
+    <h1>Create new OAuthClient</h1>
+
+    {{ include('admin/client/_form.html.twig') }}
+
+    <a href="{{ path('app_client_index') }}">back to list</a>
+{% endblock %}

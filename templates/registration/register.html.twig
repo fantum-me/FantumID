@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block body %}
+	<div class="w-screen h-screen flex-center flex-col gap-6">
+		<div class="border border-outline rounded py-12 px-10 space-y-6">
+			<div class="flex-center flex-col gap-3">
+					<span class="w-8 text-center">
+						{{ source('logo.svg') }}
+					</span>
+
+				<h1 class="text-center text-2xl font-semibold pb-3">Sign up to {{ app_name }}</h1>
+			</div>
+
+			{{ form_errors(registrationForm) }}
+
+			{{ form_start(registrationForm) }}
+
+			<div class="space-y-2">
+				{{ form_row(registrationForm.name, {attr: {class: "input"}}) }}
+				{{ form_row(registrationForm.email, {attr: {class: "input"}}) }}
+				{{ form_row(registrationForm.password.first, {
+					label: 'Password',
+					attr: {class: "input"}
+				}) }}
+				{{ form_row(registrationForm.password.second, {
+					label: 'Repeat Password',
+					attr: {class: "input"}
+				}) }}
+
+				<button type="submit" class="button-primary float-end">
+					Sign up
+				</button>
+			</div>
+
+			{{ form_end(registrationForm) }}
+		</div>
+		<span class="text-sm">Already have an Account ? <a href="{{ path('app_login') }}">Sign in</a></span>
+	</div>
+{% endblock %}

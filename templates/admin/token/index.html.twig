@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AccessToken index{% endblock %}
+
+{% block body %}
+    <h1>AccessToken index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Token</th>
+                <th>Session</th>
+                <th>Revoked</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for access_token in access_tokens %}
+            <tr>
+                <td>{{ access_token.id }}</td>
+                <td>{{ access_token.token }}</td>
+                <td>{{ access_token.sessionId }}</td>
+                <td>{{ access_token.revoked ? "Yes" : "No" }}</td>
+                <td>
+                    <a href="{{ path('app_admin_token_show', {'id': access_token.id}) }}">show</a>
+                    <a href="{{ path('app_admin_token_edit', {'id': access_token.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_token_new') }}">Create new</a>
+{% endblock %}

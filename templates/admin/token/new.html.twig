@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AccessToken{% endblock %}
+
+{% block body %}
+    <h1>Create new AccessToken</h1>
+
+    {{ include('admin/token/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_token_index') }}">back to list</a>
+{% endblock %}

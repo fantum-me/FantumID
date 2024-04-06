@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Page{% endblock %} | {{ app_name }}</title>
+
+        {% block stylesheets %}{% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="bg-surface text-on-surface {{ is_granted('IS_AUTHENTICATED') ? app.user.colorScheme : "light" }}">
+        {% block body %}{% endblock %}
+    </body>
+</html>

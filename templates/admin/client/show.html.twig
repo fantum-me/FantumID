@@ -1,0 +1,26 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}OAuthClient{% endblock %}
+
+{% block body %}
+    <h1>OAuthClient</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Secret</th>
+                <td>{{ o_auth_client.secret }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ o_auth_client.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_client_index') }}">back to list</a>
+
+    <a href="{{ path('app_client_edit', {'id': o_auth_client.id}) }}">edit</a>
+
+    {{ include('admin/client/_delete_form.html.twig') }}
+{% endblock %}
