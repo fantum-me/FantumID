@@ -1,37 +1,12 @@
 @layer components {
-	.button {
-		@apply flex items-center gap-2 px-4 py-3 rounded transition-colors;
+    .button {
+        @apply flex items-center gap-2 px-4 py-3 rounded transition-all active:scale-90;
+        @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    }
 
-		&.flat {
-			@apply p-2 gap-1;
-		}
-
-		&.squared {
-			@apply rounded-none;
-		}
-
-		.icon {
-			@apply h-5 w-5 transition-transform;
-			&.icon-lg {
-				@apply h-7 w-7;
-			}
-			&.icon-sm {
-				height: 1.15rem;
-				width: 1.15rem;
-			}
-		}
-
-
-		&:active .icon {
-			@apply scale-90;
-		}
-	}
-
-	.button-primary {
-		@apply button bg-primary text-on-color hover:bg-primary-dark;
-	}
-
-	.button-surface {
-		@apply button bg-surface text-on-surface text-opacity-90 hover:bg-surface-contrast hover:text-on-surface-contrast;
-	}
+    .button-primary {
+        @apply button text-white;
+        @apply bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500;
+        @apply focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400;
+    }
 }

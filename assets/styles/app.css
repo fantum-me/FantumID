@@ -15,9 +15,17 @@ body {
 }
 
 .input {
-    @apply w-full bg-surface-variant text-on-surface-variant rounded px-3 py-2 my-2 border border-outline;
+    @apply w-full outlined bg-gray-100 dark:bg-gray-800 rounded px-3 py-2 my-2;
 }
 
 a {
-    @apply text-primary hover:text-primary-dark;
+    @apply text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500;
+}
+
+.card {
+    @apply bg-white dark:bg-gray-900 outlined rounded py-12 px-10 space-y-6;
+}
+
+.outlined {
+    @apply ring-1 ring-gray-200 dark:ring-gray-700;
 }

@@ -6,7 +6,7 @@
 	<form method="post">
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 		<div class="w-screen h-screen flex-center flex-col gap-6">
-			<div class="border border-outline rounded py-12 px-10 space-y-6">
+			<div class="card">
 				{% if error %}
 					<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 				{% endif %}
