@@ -4,6 +4,11 @@
         @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
     }
 
+    .button-ghost {
+        @apply button text-black dark:text-white hover:text-black dark:hover:text-white;
+        @apply hover:bg-gray-200 dark:hover:bg-gray-700;
+    }
+
     .button-primary {
         @apply button text-white;
         @apply bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500;

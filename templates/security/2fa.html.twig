@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email Code Validation - 2FA{% endblock %}
+
+{% block body %}
+	<form method="post" action="{{ path('2fa_login_check') }}">
+		<input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+		<div class="w-screen h-screen flex-center flex-col gap-6">
+			<div class="card">
+
+				{% if authenticationError %}
+					<p>{{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}</p>
+				{% endif %}
+
+				<div class="flex-center flex-col gap-3">
+					<span class="w-8 text-center">
+						{{ source('logo.svg') }}
+					</span>
+
+					<h1 class="text-center text-2xl font-semibold pb-3">Two-factor Authentication</h1>
+				</div>
+
+				<p>Please enter the authentication code <br> sent to you by email.</p>
+
+				<div class="space-y-2">
+					<div>
+						<label for="_auth_code">Verification Code</label>
+						<input id="_auth_code" class="input" type="text" name="{{ authCodeParameterName }}"
+						       autocomplete="one-time-code" required autofocus inputmode="numeric" pattern="[0-9]*"/>
+					</div>
+					<div>
+						<label for="_trusted" class="p-3 pl-0">
+							<input id="_trusted" type="checkbox" name="{{ trustedParameterName }}"/>
+							Trust this Device
+						</label>
+					</div>
+					<div class="flex-between">
+						<a class="button-ghost" href="{{ path('app_logout') }}">
+							Cancel
+						</a>
+						<button class="button-primary" type="submit">
+							Sign in
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+{% endblock %}

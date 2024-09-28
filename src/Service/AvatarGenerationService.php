@@ -10,27 +10,30 @@ use ImagickPixel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UserAvatarService
+class AvatarGenerationService
 {
     public function __construct(
-        private readonly string          $projectDir,
-        private readonly string          $userAvatarPath,
-        private readonly Filesystem      $filesystem,
+        private readonly string $projectDir,
+        private readonly string $userAvatarPath,
+        private readonly Filesystem $filesystem,
         private readonly LoggerInterface $logger
-    )
-    {
+    ) {
     }
 
     const DEFAULT_AVATAR_PATH = "/public/avatar/default.png";
     const AVATAR_TEMPLATE_PATH = "/public/avatar/template.png";
 
-    public function generateAvatar(User $user): void
+    public function generateAvatar(string $identifier): string
     {
         try {
-            if (!$this->filesystem->exists($this->userAvatarPath)) $this->filesystem->mkdir($this->userAvatarPath);
+            if (!$this->filesystem->exists($this->userAvatarPath)) {
+                $this->filesystem->mkdir($this->userAvatarPath);
+            }
 
-            $color = VibrantColorGenerator::getVibrantColor();
-            $color = new ImagickPixel("rgb(" . implode(",", $color) . ")");
+            $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'avatar.png';
+
+            $color = $this->stringToColorCode($identifier);
+            $color = new ImagickPixel("#$color");
 
             $image = new Imagick($this->projectDir . self::AVATAR_TEMPLATE_PATH);
 
@@ -44,22 +47,20 @@ class UserAvatarService
 
             $background->setImageFormat('png');
 
-            $background->writeImage($this->getAvatarPath($user));
+            $background->writeImage($path);
 
             $image->destroy();
             $background->destroy();
+
+            return $path;
         } catch (Exception $e) {
-            $this->logger->alert("Error while generating user avatar (" . $user->getId() . "): " . $e->getMessage());
+            $this->logger->alert("Error while generating user avatar (" . $identifier . "): " . $e->getMessage());
+            return $this->projectDir . DIRECTORY_SEPARATOR . self::DEFAULT_AVATAR_PATH;
         }
     }
 
-    public function getAvatarPath(User $user): string
+    public function stringToColorCode(string $str): string
     {
-        return $this->userAvatarPath . "/" . $user->getId() . ".png";
-    }
-
-    public function getDefaultAvatarPath(): string
-    {
-        return $this->projectDir . self::DEFAULT_AVATAR_PATH;
+        return substr(dechex(crc32($str)), 1, 6);
     }
 }

@@ -7,16 +7,19 @@ use App\Entity\Trait\UidTrait;
 use App\Repository\ServiceProviderRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ServiceProviderRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: "name", message: "This name is already used.")]
 class ServiceProvider implements UserInterface
 {
     use UidTrait;
     use TimestampTrait;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

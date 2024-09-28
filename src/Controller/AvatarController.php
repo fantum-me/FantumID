@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Service\UserAvatarService;
+use App\Repository\UserRepository;
+use App\Service\AvatarGenerationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,16 +13,25 @@ class AvatarController extends AbstractController
 {
     #[Route("/avatar/{id}", name: "api_avatar", methods: "GET")]
     public function get(
-        User              $user,
-        Filesystem        $filesystem,
-        UserAvatarService $userAvatarService
-    ): Response
-    {
-        $path = $userAvatarService->getAvatarPath($user);
+        string $id,
+        UserRepository $userRepository,
+        Filesystem $filesystem,
+        AvatarGenerationService $userAvatarService
+    ): Response {
+        if (filter_var($id, FILTER_VALIDATE_EMAIL)) {
+            $user = $userRepository->findOneBy(["email" => $id]);
+        } else {
+            $user = $userRepository->find($id);
+        }
 
-        if (!$filesystem->exists($path)) $userAvatarService->generateAvatar($user);
+        if ($user) {
+            $path = $this->getParameter("app.data.user.avatar") . DIRECTORY_SEPARATOR . $user->getId() . ".png";
+            if ($filesystem->exists($path)) {
+                return $this->file($path, $user->getId());
+            }
+        }
 
-        if ($filesystem->exists($path)) return $this->file($path, $user->getId());
-        else return $this->file($userAvatarService->getDefaultAvatarPath(), $user->getId());
+        $path = $userAvatarService->generateAvatar($user?->getId() ?? $id);
+        return $this->file($path, $id);
     }
 }

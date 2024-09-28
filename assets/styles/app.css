@@ -5,27 +5,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-    src: url("ReadexPro-VariableFont_HEXP,wght.ttf");
-    font-family: "Readex Pro";
-}
+@layer base {
+    .input {
+        @apply w-full outlined bg-gray-100 dark:bg-gray-800 rounded px-3 py-2 my-2;
+    }
 
-body {
-    font-family: "Readex Pro", "Noto Sans", Inter, sans-serif;
-}
+    a {
+        @apply text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500;
+    }
 
-.input {
-    @apply w-full outlined bg-gray-100 dark:bg-gray-800 rounded px-3 py-2 my-2;
-}
+    .card {
+        @apply bg-white dark:bg-gray-900 outlined rounded py-12 px-10 space-y-6;
+    }
 
-a {
-    @apply text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500;
-}
-
-.card {
-    @apply bg-white dark:bg-gray-900 outlined rounded py-12 px-10 space-y-6;
-}
-
-.outlined {
-    @apply ring-1 ring-gray-200 dark:ring-gray-700;
+    .outlined {
+        @apply ring-1 ring-gray-200 dark:ring-gray-700;
+    }
 }
